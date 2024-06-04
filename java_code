@@ -1,0 +1,123 @@
+//create a package - pack
+package pack;
+
+
+import org.openqa.selenium.By;
+//import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+//import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+//import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+//import net.bytebuddy.build.Plugin.Factory.UsingReflection.Priority;
+
+public class test {
+//web driver used here is chrome ver: 100.0.4896.127 	
+	WebDriver driver;
+	
+	@BeforeTest
+	public void setup() {
+		System.setProperty("webdriver.chrome.driver","F:\\\\chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+	}
+	
+
+	@Test(priority=1)
+	public void OpenWebsiteFromGoogle() throws InterruptedException{
+		String baseUrl = "https://www.google.com/";
+		driver.get(baseUrl);
+	    driver.findElement(By.xpath("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input")).click();
+	    driver.findElement(By.xpath("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input")).sendKeys("https://parfaitcakes.com/");
+	    //Thread.sleep(2000);
+	    driver.findElement(By.xpath("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input")).sendKeys(Keys.ENTER);
+	    //Thread.sleep(1900);           
+	    driver.findElement(By.xpath("/html/body/div[7]/div/div[10]/div/div[2]/div[2]/div/div/div[1]/div/div[1]/div/a/h3")).click();
+	    System.out.println("website launching was successfully validated and driver has been closed successfully");
+	}
+	
+	
+	@Test(priority=2)
+	public void loginValidation() throws InterruptedException{
+		String baseUrl = "https://parfaitcakes.com/";
+		driver.get(baseUrl);
+		
+		driver.findElement(By.className("login")).click();
+        Thread.sleep(1500);
+        driver.findElement(By.id("mail_input_long")).sendKeys("seleniumtest1203@gmail.com");
+        Thread.sleep(1500);
+        
+        driver.findElement(By.id("pass_input_long")).sendKeys("selenium123@");
+        driver.findElement(By.xpath("//*[@id='box_login']/div[2]/div/form/fieldset/button")).click();
+        Thread.sleep(1500);
+        System.out.println("Validation of Log-in was successfull");
+	}
+	
+	@Test(priority=3)
+	public void LogoVerification() throws InterruptedException {
+		driver.get("https://parfaitcakes.com/");
+		driver.findElement(By.xpath("/html/body/div[1]/header/div[2]/a/img"));
+        WebElement logo = driver.findElement(By.xpath("/html/body/div[1]/header/div[2]/a/img"));
+        if (logo.isDisplayed()){
+        	System.out.println("Logo is Present");
+        }else{
+        	System.out.println("Logo isn't present");
+        }
+        System.out.println("Logo has been verified in the web page");
+    }
+	
+	@Test(priority=4)
+	public void Product_Search_Add_to_cart() throws InterruptedException {
+		driver.get("https://parfaitcakes.com/");
+		driver.findElement(By.xpath("/html/body/div[1]/header/div[2]/div[3]/form/div[1]/div[2]/input")).sendKeys("Milk Bread Loaf");
+        Thread.sleep(1500);
+        driver.findElement(By.xpath("/html/body/div[1]/header/div[2]/div[3]/form/div[1]/div[3]/button")).click();
+        Thread.sleep(1500);
+        driver.findElement(By.xpath("//*[@id='box_mainproducts']/div[2]/div/div[1]/div/a[2]/span")).click();
+        Thread.sleep(1500);
+        driver.findElement(By.xpath("//*[@id='box_productfull']/div[2]/div/div/div[2]/div[2]/div[1]/form/fieldset[1]/div[2]/button")).click();
+        Thread.sleep(1500);
+        System.out.println("product search and add cart was successfull");
+	}
+		
+	
+	
+	@Test(priority=5)
+	public void drop_down_menu() throws InterruptedException {
+		driver.get("https://parfaitcakes.com/");
+		driver.findElement(By.id("headlink4")).click();
+        Thread.sleep(1500);
+      
+        driver.findElement(By.xpath("//*[@id=\"category_20\"]/a")).click();
+        Thread.sleep(1500); 
+	}
+          
+        
+
+
+	@Test(priority=6)
+	public void media_page() throws InterruptedException {
+		driver.get("https://parfaitcakes.com/");
+		 //go to media pages spot
+        driver.findElement(By.xpath("/html/body/div[1]/footer/div[2]/div/div[2]/div[1]/h2")).click();
+        Thread.sleep(1500);
+        System.out.println("Driver is able to take to media pages spot");
+	}
+
+	
+
+	@AfterTest
+	public void tearDown()
+	{
+		driver.quit();
+	}
+	
+	
+
+}
